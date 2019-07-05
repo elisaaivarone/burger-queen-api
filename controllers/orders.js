@@ -1,25 +1,25 @@
 const models = require('../models');
 const Orders = models.Orders;
-const OrderItem = models.OrdersProducts;
+const OrderItem = models.OrderProducts;
 const Product = models.Products;
-const User = models.Users;
+const User = models.User;
 
 const getOrders = (req, res) => {
   Orders.findAll({ include: [{ model: OrderItem, include: [Product] }, User] })
-    .then(order => order ? res.send(order) : res.sendStatus(404))
+    .then(orders => orders ? res.send(orders) : res.sendStatus(404))
 };
 
 const getOrdersById = (req, res) => {
   Orders.findByPk(req.params.id, { include: [{ model: OrderItem, include: [Product] }, User] })
-    .then(order => {
-      res.send(order)
+    .then(orders => {
+      res.send(orders)
     })
 };
 
 const postOrders = (req, res) => {
   Orders.create(req.body, { include: [OrderItem] })
-    .then(order => {
-      res.status(201).send(order)
+    .then(orders => {
+      res.status(201).send(orders)
     });
 };
 
@@ -28,7 +28,7 @@ const putOrders = (req, res) => {
     .then(() => {
       Orders
         .findByPk(req.params.id)
-        .then(order => res.send(order))
+        .then(orders => res.send(orders))
     });
 };
 

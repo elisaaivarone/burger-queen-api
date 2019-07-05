@@ -1,26 +1,26 @@
 const models = require('../models');
-const User = models.Users;
+const User = models.User;
 
 
-const getUsers = (req, res) => {
+const getUser = (req, res) => {
   User.findAll()
-    .then(users => res.send(users)
+    .then(user => res.send(user)
     )
 };
 
-const getUsersById = (req, res) => {
+const getUserById = (req, res) => {
   User.findByPk(req.params.id)
     .then(user => {
       user ? res.send(user) : res.sendStatus(404)
     })
 };
 
-const postUsers = (req, res) => User.create(req.body)
+const postUser = (req, res) => User.create(req.body)
   .then(user => {
     res.status(201).send(user);
   });
 
-const putUsers = (req, res) => {
+const putUser = (req, res) => {
   User.update({ ...req.body }, { where: { id: req.params.id } })
     .then(() => {
       User
@@ -29,15 +29,15 @@ const putUsers = (req, res) => {
     })
 };
 
-const deleteUsers = (req, res) => {
+const deleteUser = (req, res) => {
   User.destroy({ where: { id: req.params.id } })
     .then(() => res.sendStatus(200));
 };
 
 module.exports = {
-  getUsers,
-  getUsersById,
-  postUsers,
-  putUsers,
-  deleteUsers
+  getUser,
+  getUserById,
+  postUser,
+  putUser,
+  deleteUser
 };
